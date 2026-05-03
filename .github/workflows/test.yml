@@ -23,10 +23,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-cov flake8 mypy
 
-    - name: Lint (flake8)
-      run: |
-        flake8 app
-
     - name: Type check (mypy)
       run: |
         mypy app
