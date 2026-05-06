@@ -36,7 +36,9 @@ def save_result(data: Dict) -> None:
         logging.error(f"Ошибка записи файла: {exc}")
 
 
-def print_report(total_files: int, success_files: int, errors: List[str]) -> None:
+def print_report(
+        total_files: int, success_files: int, errors: List[str]
+        ) -> None:
     """
     Выводит итоговый отчёт в консоль
     """
@@ -45,7 +47,7 @@ def print_report(total_files: int, success_files: int, errors: List[str]) -> Non
     print(f"Всего ошибок записей: {len(errors)}")
 
     if errors:
-        # Выводим только первые 5 ошибок, чтобы не засорять консоль при больших данных
+        # Выводим только первые 5 ошибок
         print("Первые ошибки:")
         for err in errors[:5]:
             print(f"- {err}")
@@ -53,7 +55,9 @@ def print_report(total_files: int, success_files: int, errors: List[str]) -> Non
             print(f"... и еще {len(errors) - 5} ошибок (см. app.log)")
 
 
-def process_file(file_path: Path, aggregator: Aggregator, errors: List[str]) -> bool:
+def process_file(
+        file_path: Path, aggregator: Aggregator, errors: List[str]
+        ) -> bool:
     """
     Обрабатывает один файл через ленивый конвейер.
     Возвращает True, если найдена хотя бы одна валидная запись.
@@ -70,7 +74,9 @@ def process_file(file_path: Path, aggregator: Aggregator, errors: List[str]) -> 
         raw_data_gen = reader.read(file_path)
 
         # 2. Конвейер: Парсинг + Фильтрация ошибок (Генератор Транзакций)
-        transaction_gen = safe_transaction_parser(raw_data_gen, errors, file_path.name)
+        transaction_gen = safe_transaction_parser(
+            raw_data_gen, errors, file_path.name
+            )
 
         valid_found = False
 
@@ -107,7 +113,7 @@ def main() -> None:
     total_files = 0
     success_files = 0
 
-    # Сортируем файлы для детерминированности (не обязательно, но полезно для тестов)
+    # Сортируем файлы для детерминированности
     files = sorted([f for f in data_dir.iterdir() if f.is_file()])
 
     for file_path in files:

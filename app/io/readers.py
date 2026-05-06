@@ -29,11 +29,9 @@ class CSVReader:
                 for row in reader:
                     yield row
         except Exception as exc:
-            # Важно: в генераторах исключения при итерации могут быть сложными,
-            # но здесь мы оборачиваем открытие файла.
-            # Если ошибка случится внутри цикла, \
-            # она всплывет к вызывающему коду.
-            raise DataFormatError(f"Ошибка чтения CSV: {file_path.name}") from exc
+            raise DataFormatError(
+                f"Ошибка чтения CSV: {file_path.name}"
+                ) from exc
 
 
 def get_reader(file_path: Path) -> Optional[CSVReader]:

@@ -4,13 +4,14 @@
 """
 
 from typing import Generator, Dict, List
-
+import logging
 from app.core.core import Transaction, BaseAppError
 from app.services.services import validate_record
 
 
 def safe_transaction_parser(
-    raw_data: Generator[Dict[str, str], None, None], errors: List[str], filename: str
+    raw_data: Generator[Dict[str, str], None, None],
+    errors: List[str], filename: str
 ) -> Generator[Transaction, None, None]:
     """
     Парсит сырые данные в Транзакции, отлавливает ошибки валидации.
@@ -25,8 +26,5 @@ def safe_transaction_parser(
         except BaseAppError as exc:
             error_msg = f"{filename}: {exc}"
             errors.append(error_msg)
-
-            # Используем logging здесь для немедленной реакции.
-            import logging
 
             logging.warning(error_msg)

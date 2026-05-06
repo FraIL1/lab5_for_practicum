@@ -10,13 +10,14 @@ from pathlib import Path
 OUTPUT_FILE = Path("data/big_test.csv")
 TARGET_SIZE_BYTES = 1_000_000_000  # 1 GB
 
-CATEGORIES = ["food", "transport", "entertainment", "health", "salary", "utilities"]
+CATEGORIES = ["food", "transport", "entertainment",
+              "health", "salary", "utilities"]
 DATE_START = "2020-01-01"
 DATE_END = "2026-01-01"
 
 
 def generate_random_id():
-    return "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
+    return "".join(random.choices(string.ascii_uppercase+string.digits, k=10))
 
 
 def generate_random_amount():
@@ -61,7 +62,7 @@ def main():
 
             if count % 1_000_000 == 0:
                 size_mb = OUTPUT_FILE.stat().st_size / (1024 * 1024)
-                print(f"  Сгенерировано строк: {count:,}. Размер: {size_mb:.2f} MB")
+                print(f"Сгенерировано строк:{count:,}. Размер:{size_mb:.2f}MB")
 
     final_size_gb = OUTPUT_FILE.stat().st_size / (1024**3)
     print(f"Готово! Всего строк: {count:,}")
